@@ -30,7 +30,7 @@ public class Minesweeper {
     }
 
     public void run() {
-        int row, col;
+        int row, col, success = 0;
         prepareGame();
         print(map);
         gameStart = true;
@@ -43,6 +43,11 @@ public class Minesweeper {
             col = scanner.nextInt();
             if (map[row][col] != -1) {
                 checkMine(row, col);
+                success++;
+                if (success == (size - (size/4))) {
+                    System.out.println("Tebrikler Oyunu Kazandınız!");
+                    break;
+                }
             } else {
                 gameStart = false;
                 System.out.println("Oyun Bitti!");
