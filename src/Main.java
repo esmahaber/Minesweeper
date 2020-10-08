@@ -24,5 +24,6 @@ public class Main {
         column = scanner.nextInt();
         
         Minesweeper minesweeper = new Minesweeper(row, column);
+        minesweeper.run();
     }
 }

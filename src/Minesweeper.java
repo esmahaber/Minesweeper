@@ -30,6 +30,7 @@ public class Minesweeper {
 
     public void run() {
         prepareGame();
+        print(map);
     }
 
     public void prepareGame() {
@@ -42,6 +43,18 @@ public class Minesweeper {
                 map[randomRow][randomCol] = -1;
                 count++;
             }
+        }
+    }
+    
+    public void print(int[][] arr){
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                if (arr[i][j] >= 0) {
+                    System.out.print(" ");
+                }
+                System.out.print(arr[i][j] + " ");                
+            }
+            System.out.println();            
         }
     }
 }
