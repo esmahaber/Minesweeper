@@ -41,10 +41,20 @@ public class Minesweeper {
             row = scanner.nextInt();
             System.out.println("Oyuncu sütun seçimi: ");
             col = scanner.nextInt();
+
+            if (row < 0 || row >= rowNumber) {
+                System.out.println("Geçersiz koordinat!");
+                continue;
+            }
+            if (col < 0 || col >= colNumber) {
+                System.out.println("Geçersiz koordinat!");
+                continue;
+            }
+
             if (map[row][col] != -1) {
                 checkMine(row, col);
                 success++;
-                if (success == (size - (size/4))) {
+                if (success == (size - (size / 4))) {
                     System.out.println("Tebrikler Oyunu Kazandınız!");
                     break;
                 }
@@ -94,7 +104,7 @@ public class Minesweeper {
             if ((row < colNumber - 1) && (map[row + 1][col] == -1)) {
                 board[row][col]++;
             }
-            
+
             if (board[row][col] == 0) {
                 board[row][col] = -2;
             }
