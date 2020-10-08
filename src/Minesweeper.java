@@ -16,6 +16,7 @@ public class Minesweeper {
     int rowNumber, colNumber, size;
     int[][] map;
     int[][] board;
+    boolean gameStart = false;
 
     Random random = new Random();
     Scanner scanner = new Scanner(System.in);
@@ -29,8 +30,24 @@ public class Minesweeper {
     }
 
     public void run() {
+        int row, col;
         prepareGame();
         print(map);
+        gameStart = true;
+        System.out.println("Oyun başladı");
+        while (gameStart) {
+            print(board);
+            System.out.println("Oyuncu satır seçimi: ");
+            row = scanner.nextInt();
+            System.out.println("Oyuncu sütun seçimi: ");
+            col = scanner.nextInt();
+            if (map[row][col] != -1) {
+                checkMine(row, col);
+            } else {
+                gameStart = false;
+                System.out.println("Oyun Bitti!");
+            }
+        }
     }
 
     public void prepareGame() {
@@ -45,16 +62,38 @@ public class Minesweeper {
             }
         }
     }
-    
-    public void print(int[][] arr){
+
+    public void print(int[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
                 if (arr[i][j] >= 0) {
                     System.out.print(" ");
                 }
-                System.out.print(arr[i][j] + " ");                
+                System.out.print(arr[i][j] + " ");
             }
-            System.out.println();            
+            System.out.println();
         }
+    }
+
+    public void checkMine(int row, int col) {
+        if (map[row][col] == 0) {
+            if ((col < colNumber - 1) && (map[row][col + 1] == -1)) {
+                board[row][col]++;
+            }
+            if ((col > 0) && (map[row][col - 1]) == -1) {
+                board[row][col]++;
+            }
+            if ((row > 0) && (map[row - 1][col] == -1)) {
+                board[row][col]++;
+            }
+            if ((row < colNumber - 1) && (map[row + 1][col] == -1)) {
+                board[row][col]++;
+            }
+            
+            if (board[row][col] == 0) {
+                board[row][col] = -2;
+            }
+        }
+
     }
 }

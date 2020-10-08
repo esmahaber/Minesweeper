@@ -16,8 +16,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int row, column;
-        System.out.println("Mayın Tarlasına Hoşgldiniz!");
-        System.out.println("Lütfen oyun boyunu giriniz");
+        System.out.println("Mayın Tarlasına Hoş geldiniz!");
+        System.out.println("Lütfen oyun boyutunu giriniz");
         System.out.println("Satır sayısı");
         row = scanner.nextInt();
         System.out.println("Sütun sayısı");
