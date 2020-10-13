@@ -36,6 +36,7 @@ public class Minesweeper {
         }
 
         generateMine();
+        print();
         frame.setVisible(true);
     }
 
@@ -54,5 +55,20 @@ public class Minesweeper {
         }
     }
 
+    public void print() {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                if (board[row][col].isMine()) {
+                    imageIcon = new ImageIcon("C:\\javaDemos\\Minesweeper\\src\\mine.png");
+                    
+                    Image im = imageIcon.getImage();
+                    Image im2 = im.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
     
+                    board[row][col].setIcon(new ImageIcon(im2));
+                   
+                }
+
+            }
+        }
+    }
 }
