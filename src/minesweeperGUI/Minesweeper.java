@@ -41,7 +41,7 @@ public class Minesweeper implements MouseListener {
 
         generateMine();
         updateCount();
-      //  print();
+        //  print();
 
         frame.setVisible(true);
     }
@@ -69,8 +69,8 @@ public class Minesweeper implements MouseListener {
                     Image im = imageIcon.getImage();
                     Image im2 = im.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
                     board[row][col].setIcon(new ImageIcon(im2));
-                }else{
-                    board[row][col].setText(board[row][col].getCount()+"");
+                } else {
+                    board[row][col].setText(board[row][col].getCount() + "");
                 }
             }
         }
@@ -82,8 +82,26 @@ public class Minesweeper implements MouseListener {
                 if (board[row][col].isMine()) {
                     counting(row, col);
                 }
-
             }
+        }
+    }
+
+    public void open(int row, int col) {
+        if (row < 0 || row >= board.length
+                || col < 0 || col >= board[0].length
+                || board[row][col].getText().length() > 0
+                || board[row][col].isEnabled() == false) {
+            return;
+        } else if (board[row][col].getCount() != 0) {
+            System.out.println("minesweeperGUI.Minesweeper.open()");
+            board[row][col].setText(board[row][col].getCount() + "");
+            board[row][col].setEnabled(false);
+        } else {
+            board[row][col].setEnabled(false);
+            open(row - 1, col);
+            open(row + 1, col);
+            open(row, col - 1);
+            open(row, col + 1);
 
         }
     }
@@ -109,6 +127,7 @@ public class Minesweeper implements MouseListener {
             if (button.isMine()) {
                 JOptionPane.showMessageDialog(frame, "Mayına Bastınız Oyun Bitti!");
             } else {
+                open(button.getRow(), button.getCol());
             }
         } else if (e.getButton() == 3) { //mouse right click
             System.out.println("Sağ click");
