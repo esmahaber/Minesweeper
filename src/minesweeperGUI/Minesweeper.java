@@ -22,6 +22,7 @@ public class Minesweeper implements MouseListener {
     JFrame frame;
     Button[][] board = new Button[10][10];
     ImageIcon imageIcon;
+    int openButton = 0;
 
     public Minesweeper() {
         frame = new JFrame("Mayın tarlası");
@@ -93,16 +94,16 @@ public class Minesweeper implements MouseListener {
                 || board[row][col].isEnabled() == false) {
             return;
         } else if (board[row][col].getCount() != 0) {
-            System.out.println("minesweeperGUI.Minesweeper.open()");
             board[row][col].setText(board[row][col].getCount() + "");
             board[row][col].setEnabled(false);
+            openButton++;
         } else {
             board[row][col].setEnabled(false);
             open(row - 1, col);
             open(row + 1, col);
             open(row, col - 1);
             open(row, col + 1);
-
+            openButton++;
         }
     }
 
@@ -128,6 +129,10 @@ public class Minesweeper implements MouseListener {
                 JOptionPane.showMessageDialog(frame, "Mayına Bastınız Oyun Bitti!");
             } else {
                 open(button.getRow(), button.getCol());
+                if (openButton == (board.length * board[0].length) - 10) {
+                    JOptionPane.showMessageDialog(frame, "Tebrikler Oyunu Kazandınız!!");
+
+                }
             }
         } else if (e.getButton() == 3) { //mouse right click
             System.out.println("Sağ click");
