@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,7 +40,9 @@ public class Minesweeper implements MouseListener {
         }
 
         generateMine();
-        print();
+        updateCount();
+      //  print();
+
         frame.setVisible(true);
     }
 
@@ -66,7 +69,32 @@ public class Minesweeper implements MouseListener {
                     Image im = imageIcon.getImage();
                     Image im2 = im.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
                     board[row][col].setIcon(new ImageIcon(im2));
+                }else{
+                    board[row][col].setText(board[row][col].getCount()+"");
+                }
+            }
+        }
+    }
 
+    public void updateCount() {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                if (board[row][col].isMine()) {
+                    counting(row, col);
+                }
+
+            }
+
+        }
+    }
+
+    private void counting(int row, int col) {
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int k = col - 1; k <= col + 1; k++) {
+                try {
+                    int value = board[i][k].getCount();
+                    board[i][k].setCount(++value);
+                } catch (Exception e) {
                 }
 
             }
@@ -78,6 +106,10 @@ public class Minesweeper implements MouseListener {
         Button button = (Button) e.getComponent();
         if (e.getButton() == 1) { //mouse left click
             System.out.println("Sol tık");
+            if (button.isMine()) {
+                JOptionPane.showMessageDialog(frame, "Mayına Bastınız Oyun Bitti!");
+            } else {
+            }
         } else if (e.getButton() == 3) { //mouse right click
             System.out.println("Sağ click");
             if (!button.isFlag()) {
