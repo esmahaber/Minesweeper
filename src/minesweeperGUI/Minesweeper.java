@@ -7,6 +7,8 @@ package minesweeperGUI;
 
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -14,12 +16,12 @@ import javax.swing.JFrame;
  *
  * @author ACER
  */
-public class Minesweeper {
+public class Minesweeper implements MouseListener {
 
     JFrame frame;
     Button[][] board = new Button[10][10];
     ImageIcon imageIcon;
-    
+
     public Minesweeper() {
         frame = new JFrame("Mayın tarlası");
         frame.setSize(500, 500);
@@ -30,6 +32,7 @@ public class Minesweeper {
             for (int col = 0; col < board[0].length; col++) {
                 Button button = new Button(row, col);
                 frame.add(button);
+                button.addMouseListener(this);
                 board[row][col] = button;
 
             }
@@ -60,15 +63,49 @@ public class Minesweeper {
             for (int col = 0; col < board[0].length; col++) {
                 if (board[row][col].isMine()) {
                     imageIcon = new ImageIcon("C:\\javaDemos\\Minesweeper\\src\\mine.png");
-                    
                     Image im = imageIcon.getImage();
                     Image im2 = im.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-    
                     board[row][col].setIcon(new ImageIcon(im2));
-                   
+
                 }
 
             }
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Button button = (Button) e.getComponent();
+        if (e.getButton() == 1) { //mouse left click
+            System.out.println("Sol tık");
+        } else if (e.getButton() == 3) { //mouse right click
+            System.out.println("Sağ click");
+            if (!button.isFlag()) {
+                imageIcon = new ImageIcon("C:\\javaDemos\\Minesweeper\\src\\flag.png");
+                Image imageFlag = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+                button.setIcon(new ImageIcon(imageFlag));
+                button.setFlag(true);
+            } else {
+                button.setIcon(null);
+                button.setFlag(false);
+            }
+
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }
